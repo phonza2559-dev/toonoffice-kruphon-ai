@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KRUPHON AI - ปลดล็อกศักยภาพใหม่ด้วย AI Workflows และ AI Transformation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #007BFF; /* Blue */
+            --secondary-color: #28A745; /* Green */
+            --accent-color: #FFC107; /* Yellow for highlights, not primary text */
+            --text-dark: #343A40; /* Dark Grey */
+            --text-light: #6C757D; /* Lighter Grey */
+            --bg-light: #F8F9FA; /* Light Grey */
+            --bg-white: #FFFFFF; /* White */
+            --shadow-light: 0 4px 15px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.15);
+            --border-radius: 8px;
+            --transition-speed: 0.3s ease-in-out;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.7;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-dark);
+            margin-bottom: 0.8em;
+            font-weight: 700;
+        }
+
+        h1 { font-size: 2.8em; line-height: 1.2; }
+        h2 { font-size: 2.2em; line-height: 1.3; }
+        h3 { font-size: 1.8em; line-height: 1.4; }
+        p { margin-bottom: 1em; }
+
+        a {
+            text-decoration: none;
+            color: var(--primary-color);
+            transition: color var(--transition-speed);
+        }
+
+        a:hover {
+            color: var(--text-dark);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 25px;
+        }
+
+        /* --- Global Buttons --- */
+        .btn {
+            display: inline-block;
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-align: center;
+            transition: all var(--transition-speed);
+            cursor: pointer;
+            border: none;
+            font-size: 1.05em;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--bg-white);
+            box-shadow: 0 6px 15px rgba(0, 123, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3; /* Darker blue */
+            box-shadow: 0 8px 20px rgba(0, 123, 255, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            color: var(--bg-white);
+            box-shadow: 0 6px 15px rgba(40, 167, 69, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background-color: #218838; /* Darker green */
+            box-shadow: 0 8px 20px rgba(40, 167, 69, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* --- Header / Navbar --- */
+        .header {
+            background-color: var(--bg-white);
+            box-shadow: var(--shadow-light);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.8em;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-icon {
+            margin-right: 8px;
+            font-size: 1.2em;
+            color: var(--secondary-color);
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links li {
+            margin-left: 35px;
+        }
+
+        .nav-links a {
+            color: var(--text-dark);
+            font-weight: 500;
+            padding: 5px 0;
+            position: relative;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: width var(--transition-speed);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            width: 30px;
+            height: 22px;
+            justify-content: space-between;
+        }
+
+        .menu-toggle span {
+            height: 3px;
+            width: 100%;
+            background: var(--text-dark);
+            border-radius: 2px;
+            transition: all var(--transition-speed);
+        }
+
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #00aaff 100%);
+            color: var(--bg-white);
+            padding: 120px 0;
+            text-align: center;
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1555212697-c2474d2621b1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTMzNXwwfDF8c2VhcmNofDEzfHxBSSUyMHRlY2hub2xvZ3l8ZW58MHx8fHwxNzE3NTk4NDY1fDI&ixlib=rb-4.0.3&q=80&w=1080') no-repeat center center/cover;
+            opacity: 0.15;
+            z-index: 1;
+        }
+
+        .hero .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            color: var(--bg-white);
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            text-shadow: 0 3px 6px rgba(0,0,0,0.2);
+        }
+
+        .hero .subhead {
+            font-size: 1.5em;
+            margin-bottom: 30px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: 300;
+        }
+
+        .hero p {
+            font-size: 1.15em;
+            max-width: 900px;
+            margin: 0 auto 40px auto;
+            color: rgba(255,255,255,0.9);
+        }
+
+        /* --- General Section Styling --- */
+        section {
+            padding: 80px 0;
+            opacity: 0; /* For scroll animation */
+            transform: translateY(20px); /* For scroll animation */
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        section:nth-of-type(even) {
+            background-color: var(--bg-light);
+        }
+
+        section h2 {
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 2.5em;
+        }
+
+        section .subhead {
+            text-align: center;
+            font-size: 1.3em;
+            color: var(--text-light);
+            max-width: 800px;
+            margin: 0 auto 60px auto;
+            font-weight: 400;
+        }
+
+        /* --- Features Sections (AI Workflows & AI Transformation) --- */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .feature-card {
+            background-color: var(--bg-white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            padding: 30px;
+            text-align: center;
+            transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .feature-card .icon {
+            font-size: 3.5em;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .feature-card p {
+            font-size: 0.95em;
+            color: var(--text-light);
+            flex-grow: 1;
+        }
+
+        .image-content-section {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            margin-top: 60px;
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+        }
+
+        .image-content-section.reverse {
+            flex-direction: row-reverse;
+        }
+
+        .image-content-section .content,
+        .image-content-section .image-wrapper {
+            flex: 1;
+            min-width: 300px; /* Ensure content doesn't get too squeezed */
+        }
+
+        .image-content-section .image-wrapper img {
+            max-width: 100%;
+            height: auto;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            display: block; /* Remove extra space below image */
+        }
+
+        .image-content-section .content h3 {
+            text-align: left;
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        .image-content-section .content ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        .image-content-section .content ul li {
+            position: relative;
+            padding-left: 35px;
+            margin-bottom: 15px;
+            font-size: 1.05em;
+            color: var(--text-dark);
+        }
+
+        .image-content-section .content ul li::before {
+            content: '✓';
+            color: var(--secondary-color);
+            font-size: 1.2em;
+            position: absolute;
+            left: 0;
+            top: -2px;
+            font-weight: 700;
+        }
+
+        /* --- Our Work / Case Studies Section --- */
+        .case-studies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .case-study-card {
+            background-color: var(--bg-white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .case-study-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .case-study-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .case-study-card .card-content {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .case-study-card h3 {
+            font-size: 1.4em;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+            text-align: left;
+        }
+
+        .case-study-card p {
+            font-size: 0.95em;
+            color: var(--text-light);
+            flex-grow: 1;
+            margin-bottom: 20px;
+        }
+
+        .case-study-card .btn {
+            align-self: flex-start;
+            padding: 10px 20px;
+            font-size: 0.9em;
+        }
+
+        /* --- Contact Section --- */
+        .contact {
+            background: linear-gradient(135deg, var(--secondary-color) 0%, #32cd32 100%);
+            color: var(--bg-white);
+            text-align: center;
+            padding: 100px 0;
+        }
+
+        .contact h2 {
+            color: var(--bg-white);
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .contact .subhead {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.4em;
+            margin-bottom: 40px;
+        }
+
+        .contact p {
+            color: rgba(255,255,255,0.8);
+            max-width: 700px;
+            margin: 0 auto 50px auto;
+            font-size: 1.05em;
+        }
+
+        .contact-form-wrapper {
+            background-color: var(--bg-white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-hover);
+            padding: 40px;
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .contact-form-wrapper label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        .contact-form-wrapper input,
+        .contact-form-wrapper textarea {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1em;
+            transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
+        }
+
+        .contact-form-wrapper input:focus,
+        .contact-form-wrapper textarea:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+            outline: none;
+        }
+
+        .contact-form-wrapper textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .contact-form-wrapper .btn-primary {
+            width: auto;
+            display: block;
+            margin-top: 20px;
+        }
+
+        /* --- Footer --- */
+        .footer {
+            background-color: var(--text-dark);
+            color: rgba(255, 255, 255, 0.7);
+            padding: 40px 0;
+            text-align: center;
+            font-size: 0.9em;
+        }
+
+        .footer .logo {
+            color: var(--primary-light-color); /* Lighter color for footer logo */
+            margin-bottom: 15px;
+            justify-content: center;
+        }
+
+        .footer .social-links {
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .footer .social-links a {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.5em;
+            margin: 0 10px;
+            transition: color var(--transition-speed);
+        }
+
+        .footer .social-links a:hover {
+            color: var(--bg-white);
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 3em;
+            }
+            .hero .subhead {
+                font-size: 1.3em;
+            }
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                background-color: var(--bg-white);
+                position: absolute;
+                top: 70px; /* Adjust based on header height */
+                left: 0;
+                box-shadow: var(--shadow-light);
+                padding: 15px 0;
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            .nav-links li {
+                margin: 10px 20px;
+                text-align: center;
+            }
+            .menu-toggle {
+                display: flex;
+            }
+            .image-content-section {
+                flex-direction: column;
+                text-align: center;
+            }
+            .image-content-section.reverse {
+                flex-direction: column; /* Consistent stacking */
+            }
+            .image-content-section .content h3 {
+                text-align: center;
+            }
+            .image-content-section .content ul {
+                padding-left: 0;
+                text-align: left;
+            }
+            .image-content-section .content ul li {
+                margin-left: 20px; /* Indent for bullet point */
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5em; }
+            h2 { font-size: 1.8em; }
+            h3 { font-size: 1.4em; }
+            .hero { padding: 80px 0; min-height: 60vh; }
+            .hero h1 { font-size: 2.5em; }
+            .hero .subhead { font-size: 1.1em; }
+            .hero p { font-size: 1em; }
+            section { padding: 60px 0; }
+            section h2 { font-size: 2em; }
+            section .subhead { font-size: 1.1em; margin-bottom: 40px; }
+            .features-grid { grid-template-columns: 1fr; }
+            .contact h2 { font-size: 2.2em; }
+            .contact .subhead { font-size: 1.1em; }
+            .contact-form-wrapper { padding: 30px; }
+            .btn { padding: 12px 25px; font-size: 0.95em; }
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 2em; }
+            h2 { font-size: 1.6em; }
+            .hero { padding: 60px 0; min-height: 50vh; }
+            .hero h1 { font-size: 2em; }
+            .hero .subhead { font-size: 0.9em; }
+            .hero p { font-size: 0.9em; margin-bottom: 30px; }
+            .logo { font-size: 1.5em; }
+            .nav-links.active { top: 60px; } /* Adjust for smaller header */
+            .contact h2 { font-size: 1.8em; }
+            .contact .subhead { font-size: 1em; margin-bottom: 30px; }
+            .contact-form-wrapper { padding: 20px; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="container navbar">
+            <a href="#" class="logo">
+                <span class="logo-icon">🚀</span> KRUPHON AI
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#hero">หน้าแรก</a></li>
+                    <li><a href="#ai-workflows">AI Workflows</a></li>
+                    <li><a href="#ai-transformation">AI Transformation</a></li>
+                    <li><a href="#our-work">ผลงานของเรา</a></li>
+                    <li><a href="#contact">ติดต่อเรา</a></li>
+                </ul>
+            </nav>
+            <div class="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section id="hero" class="hero">
+            <div class="container">
+                <h1>ปลดล็อกศักยภาพใหม่ด้วย AI Workflows และ AI Transformation</h1>
+                <p class="subhead">ยกระดับธุรกิจของคุณสู่ยุคดิจิทัลด้วยโซลูชัน AI อัจฉริยะจาก KRUPHON AI</p>
+                <p>เราช่วยองค์กรของคุณออกแบบและนำ AI มาใช้ในกระบวนการทำงาน เพื่อเพิ่มประสิทธิภาพ ลดต้นทุน และสร้างโอกาสทางธุรกิจที่ไม่เคยมีมาก่อน</p>
+                <a href="#contact" class="btn btn-primary">เริ่มต้น AI Transformation กับเรา</a>
+            </div>
+        </section>
+
+        <section id="ai-workflows">
+            <div class="container">
+                <h2>AI Workflows: กระบวนการทำงานอัจฉริยะที่ไร้รอยต่อ</h2>
+                <p class="subhead">เปลี่ยนงานซ้ำซากให้เป็นระบบอัตโนมัติ เพิ่มความแม่นยำ และลดเวลาการทำงาน</p>
+                <div class="image-content-section">
+                    <div class="image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTMzNXwwfDF8c2VhcmNofDh8fEFJJTIwd29ya2Zsb3dzfGVufDB8fHx8MTcxNzU5ODQ2NXwy&ixlib=rb-4.0.3&q=80&w=1080" alt="ภาพประกอบ AI Workflows: การทำงานอัตโนมัติ">
+                    </div>
+                    <div class="content">
+                        <p>KRUPHON AI นำเสนอการผสานรวม AI เข้ากับขั้นตอนการทำงานหลักของคุณ ตั้งแต่การวิเคราะห์ข้อมูล การจัดการเอกสาร ไปจนถึงการสนับสนุนลูกค้า เพื่อให้ทีมของคุณมีเวลาโฟกัสกับงานเชิงกลยุทธ์มากขึ้น</p>
+                        <ul>
+                            <li>ระบบอัตโนมัติสำหรับงานประจำ</li>
+                            <li>การวิเคราะห์ข้อมูลเชิงลึกแบบเรียลไทม์</li>
+                            <li>การจัดการเอกสารอัจฉริยะ</li>
+                            <li>Chatbot และผู้ช่วย AI</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="ai-transformation">
+            <div class="container">
+                <h2>AI Transformation: ก้าวสู่ผู้นำในยุคดิจิทัล</h2>
+                <p class="subhead">สร้างนวัตกรรมใหม่ ขยายขีดความสามารถ และขับเคลื่อนการเติบโตอย่างยั่งยืนด้วย AI</p>
+                <div class="image-content-section reverse">
+                    <div class="image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1579547621879-c7ac7096e850?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTMzNXwwfDF8c2VhcmNofDMzfHxBSSUyMHRyYW5zZm9ybWF0aW9ufGVufDB8fHx8MTcxNzU5ODQ2NXwy&ixlib=rb-4.0.3&q=80&w=1080" alt="ภาพประกอบ AI Transformation: การเปลี่ยนแปลงธุรกิจ">
+                    </div>
+                    <div class="content">
+                        <p>เราไม่ได้แค่ปรับปรุงกระบวนการ แต่เราช่วยคุณพลิกโฉมธุรกิจทั้งหมด ด้วยกลยุทธ์ AI ที่ปรับแต่งให้เข้ากับเป้าหมายเฉพาะของคุณ ตั้งแต่การวางแผน การพัฒนา ไปจนถึงการนำไปปฏิบัติ เพื่อให้คุณได้เปรียบในการแข่งขัน</p>
+                        <ul>
+                            <li>สร้างโมเดลธุรกิจใหม่</li>
+                            <li>เพิ่มความสามารถในการแข่งขัน</li>
+                            <li>ตัดสินใจได้ดีขึ้นด้วยข้อมูล</li>
+                            <li>ยกระดับประสบการณ์ลูกค้า</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="our-work" class="bg-white">
+            <div class="container">
+                <h2>ผลงานที่ผ่านมา: ประสบการณ์และความสำเร็จของเรา</h2>
+                <p class="subhead">ดูว่าเราได้ช่วยธุรกิจต่างๆ เปลี่ยนแปลงด้วย AI ได้อย่างไร</p>
+                <div class="case-studies-grid">
+                    <div class="case-study-card">
+                        <img src="https://images.unsplash.com/photo-1551288259-246a48a91060?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTMzNXwwfDF8c2VhcmNofDExfHxkYXRhJTIwYW5hbHlzaXN8ZW58MHx8fHwxNzE3NTk4NDY1fDI&ixlib=rb-4.0.3&q=80&w=1080" alt="Case Study: การวิเคราะห์ข้อมูลลูกค้าด้วย AI">
+                        <div class="card-content">
+                            <h3>ระบบวิเคราะห์ข้อมูลลูกค้าเชิงลึก</h3>
+                            <p>พัฒนาระบบ AI ที่ช่วยให้ธุรกิจค้าปลีกเข้าใจพฤติกรรมลูกค้าได้ลึกซึ้งยิ่งขึ้น เพื่อนำไปปรับปรุงกลยุทธ์การตลาดและเพิ่มยอดขาย</p>
+                            <a href="#" class="btn btn-secondary">ดูรายละเอียด</a>
+                        </div>
+                    </div>
+                    <div class="case-study-card">
+                        <img src="https://images.unsplash.com/photo-1542744095-654bbcd0736c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTMzNXwwfDF8c2VhcmNofDJ8fG9mZmljZSUyMGF1dG9tYXRpb258ZW58MHx8fHwxNzE3NTk4NDY1fDI&ixlib=rb-4.0.3&q=80&w=1080" alt="Case Study: ระบบจัดการเอกสารอัตโนมัติ">
+                        <div class="card-content">
+                            <h3>แพลตฟอร์มจัดการเอกสารอัตโนมัติ</h3>
+                            <p>ลดภาระงานเอกสารกว่า 70% ให้กับองค์กรขนาดใหญ่ ด้วย AI ที่สามารถจำแนก จัดเก็บ และสกัดข้อมูลจากเอกสารได้อย่างแม่นยำ</p>
+                            <a href="#" class="btn btn-secondary">ดูรายละเอียด</a>
+                        </div>
+                    </div>
+                    <div class="case-study-card">
+                        <img src="https://images.unsplash.com/photo-1589182371501-8b389ad31233?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTMzNXwwfDF8c2VhcmNofDl8fENoYXRib3QlMjBBSSUyMGN1c3RvbWVyJTIwc2VydmljZXxlbnwwfHx8fDE3MTc1OTg0NjV8Mg&ixlib=rb-4.0.3&q=80&w=1080" alt="Case Study: Chatbot ผู้ช่วยอัจฉริยะ">
+                        <div class="card-content">
+                            <h3>Chatbot ผู้ช่วยลูกค้าอัจฉริยะ 24/7</h3>
+                            <p>พัฒนา Chatbot ที่ตอบคำถามและแก้ไขปัญหาลูกค้าได้ตลอด 24 ชั่วโมง ช่วยเพิ่มความพึงพอใจและลดภาระงานของพนักงาน</p>
+                            <a href="#" class="btn btn-secondary">ดูรายละเอียด</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact">
+            <div class="container">
+                <h2>พร้อมจะเปลี่ยนแปลงธุรกิจของคุณแล้วหรือยัง?</h2>
+                <p class="subhead">ให้ KRUPHON AI เป็นส่วนหนึ่งในการขับเคลื่อนความสำเร็จของคุณ</p>
+                <p>พูดคุยกับผู้เชี่ยวชาญของเราเพื่อค้นหาโซลูชัน AI ที่เหมาะสมที่สุดสำหรับธุรกิจของคุณ</p>
+                <div class="contact-form-wrapper">
+                    <form id="contactForm">
+                        <label for="name">ชื่อของคุณ</label>
+                        <input type="text" id="name" name="name" placeholder="ชื่อ-นามสกุล" required>
+
+                        <label for="email">อีเมล</label>
+                        <input type="email" id="email" name="email" placeholder="you@example.com" required>
+
+                        <label for="phone">เบอร์โทรศัพท์ (ไม่บังคับ)</label>
+                        <input type="tel" id="phone" name="phone" placeholder="08X-XXX-XXXX">
+
+                        <label for="message">ข้อความ</label>
+                        <textarea id="message" name="message" rows="5" placeholder="คุณสนใจโซลูชัน AI แบบไหน หรือมีคำถามอะไรไหมครับ?" required></textarea>
+
+                        <button type="submit" class="btn btn-primary">ส่งข้อความ</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="logo">
+                <span class="logo-icon">🚀</span> KRUPHON AI
+            </div>
+            <p>&copy; 2024 KRUPHON AI. สงวนลิขสิทธิ์.</p>
+            <div class="social-links">
+                <a href="#" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.271 0-4.192 1.583-4.192 4.615v3.385z"/></svg></a>
+                <a href="#" aria-label="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.381 1.11-2.5 2.48-2.5s2.48 1.119 2.48 2.5zm.02 6.5h-5v16h5v-16zm7.982 0h-4.968v16h4.969v-8.399c0-4.67 6.029-5.052 6.029 0v8.399h4.988v-10.131c0-7.88-8.922-7.593-11.018-3.714v-2.155z"/></svg></a>
+                <a href="#" aria-label="Twitter"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.791-1.574 2.162-2.722-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.414 0-6.182 2.768-6.182 6.182 0 .485.055.955.162 1.404-5.151-.259-9.733-2.729-12.793-6.463-.533.918-.84 1.987-.84 3.136 0 2.144 1.096 4.043 2.767 5.148-.203-.006-.397-.03-.592-.083v.079c0 2.98 2.127 5.46 4.939 6.02-.48.131-.986.202-1.503.202-.367 0-.726-.036-1.073-.109.782 2.443 3.056 4.225 5.761 4.276-2.091 1.64-4.723 2.625-7.59 2.625-.493 0-.979-.029-1.456-.085 2.706 1.737 5.91 2.75 9.38 2.75 11.238 0 17.4-9.292 17.4-17.391 0-.265-.008-.525-.021-.787.953-.691 1.79-1.557 2.459-2.531z"/></svg></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            const header = document.querySelector('.header');
+            const sections = document.querySelectorAll('section');
+
+            // Toggle mobile menu
+            menuToggle.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+                menuToggle.classList.toggle('active');
+            });
+
+            // Smooth scroll for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+
+                    if (targetElement) {
+                        // Close mobile menu if open
+                        if (navLinks.classList.contains('active')) {
+                            navLinks.classList.remove('active');
+                            menuToggle.classList.remove('active');
+                        }
+
+                        window.scrollTo({
+                            top: targetElement.offsetTop - header.offsetHeight, // Adjust for sticky header
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // Intersection Observer for section reveal animation
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15 // Trigger when 15% of the section is visible
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target); // Stop observing once animated
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+
+            // Basic form validation for contact form
+            const contactForm = document.getElementById('contactForm');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault(); // Prevent actual form submission for this demo
+
+                    const name = document.getElementById('name').value;
+                    const email = document.getElementById('email').value;
+                    const message = document.getElementById('message').value;
+
+                    if (name && email && message) {
+                        alert('ขอบคุณสำหรับข้อความของคุณ! เราจะติดต่อกลับไปโดยเร็วที่สุดครับ');
+                        contactForm.reset(); // Clear the form
+                    } else {
+                        alert('กรุณากรอกข้อมูลให้ครบถ้วนในช่องที่มีเครื่องหมาย * ครับ');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
